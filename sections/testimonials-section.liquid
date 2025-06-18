@@ -1,0 +1,71 @@
+<section class="testimonial-section py-10 px-4">
+  <h2 class="text-2xl font-bold mb-6 text-center">{{ section.title }}</h2>
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {% for block in section.blocks %}
+      <div class="bg-white shadow rounded-xl p-6">
+        {% if block.settings.avatar %}
+          <img 
+            width="100%"
+            height="100%"
+            src="{{ block.settings.avatar | image_url: width: 80, height: 80, crop: 'center' }}" 
+            alt="{{ block.settings.author | escape }}" 
+            class="mx-auto mb-4 w-20 h-20 rounded-full object-cover"
+          >
+        {% endif %}
+        <p class="italic text-gray-700 mb-4">“{{ block.settings.quote }}”</p>
+        <p class="font-semibold text-right">— {{ block.settings.author }}</p>
+        <p class="font-semibold text-right">— {{ block.settings.position }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+    "name": "Testimonial Section",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Section Title",
+            "default": "Testimonials"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "testimonial",
+            "name": "Testimonial",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "avatar",
+                    "label": "Avatar Image"
+                },
+                {
+                    "type": "text",
+                    "id": "quote",
+                    "label": "Quote"
+                },
+                {
+                    "type": "text",
+                    "id": "author",
+                    "label": "Author"
+                },
+                {
+                    "type": "text",
+                    "id": "position",
+                    "label": "Position"
+                }
+            ]
+        }
+    ],
+    "max_blocks": 10,
+    "presets": [
+        {
+            "name": "Testimonials Section",
+            "blocks": []
+        }
+    ]
+}
+{% endschema %}

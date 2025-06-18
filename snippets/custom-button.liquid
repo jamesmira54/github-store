@@ -1,0 +1,36 @@
+{% assign style = style | default: 'primary' %}
+{% assign url = url | default: "#" %}
+{% assign target = target | default: '_self' %}
+{% assign rel = rel | default: '' %}
+{% assign icon = icon | default: '' %}
+{% assign text = text | default: 'Click Here' %}
+
+<a 
+    href="{{ url }}" 
+    class="inline-block px-4 py-2 text-sm font-medium rounded transition duration-200 
+    {% if style == 'primary' %}
+        bg-blue-500 text-white hover:bg-blue-600
+    {% elsif style == 'secondary' %}
+        bg-gray-500 text-white hover:bg-gray-600
+    {% elsif style == 'outline' %}
+        border border-gray-300 text-gray-700 hover:bg-gray-100
+    {% elsif style == 'link' %}
+        text-blue-500 hover:underline
+    {% else %}
+        bg-gray-200 text-gray-800 hover:bg-gray-300
+    {% endif %}"
+    {% if target == '_blank' %}
+        target="_blank"
+    {% endif %}
+    {% if target %}
+        target="{{ target }}"
+    {% endif %} 
+    {% if rel %}
+        rel="{{ rel }}"
+    {% endif %}
+>
+  {% if icon %}
+    <span class="icon">{{ icon }}</span>
+  {% endif %}
+  <span class="text-white">{{ text }}</span> 
+</a>

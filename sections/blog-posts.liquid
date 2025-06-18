@@ -1,0 +1,81 @@
+{% assign blog_handle = section.settings.blog %}
+{% assign blog_obj = blogs[blog_handle] %}
+{% assign articles = blog_obj.articles | slice: 0, 20 %}
+
+{% if section.settings.sort_order == "newest" %}
+  {% assign sorted_articles = articles | sort: "published_at" %}
+{% else %}
+  {% assign sorted_articles = articles | sort: "published_at" | reverse %}
+{% endif %}
+
+<div class="blog-section py-10 px-4">
+  <h2 class="text-2xl font-bold text-center mb-8">Latest Blog Posts</h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for article in sorted_articles limit: section.settings.posts_to_show %}
+      <div class="bg-white p-6 rounded-lg shadow">
+        {% if article.image %}
+          <a href="{{ article.url }}">
+            <img
+                width="100%"
+                height="100%"
+                src="{{ article.image | image_url: width: 800 }}"
+                alt="{{ article.image.alt | escape }}"
+                class="w-full h-48 object-cover"
+            >
+          </a>
+        {% endif %}
+        <div class="p-6">
+            <h3 class="text-lg font-semibold mb-2">
+            <a href="{{ article.url }}" class="hover:underline">{{ article.title }}</a>
+            </h3>
+            <p class="text-sm text-gray-500 mb-4">{{ article.published_at | date: "%B %d, %Y" }}</p>
+            <p class="text-gray-700 mb-4">{{ article.excerpt | strip_html | truncatewords: 20 }}</p>
+            <a href="{{ article.url }}" class="text-blue-600 font-medium hover:underline">Read More</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+{% schema %}
+{
+    "name": "Blog Posts",
+    "settings": [
+        {
+            "type": "blog",
+            "id": "blog",
+            "label": "Select blog"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Section Title",
+            "default": "Latest Blog Posts"
+        },
+        {
+            "type": "select",
+            "id": "sort_order",
+            "label": "Sort Order",
+            "default": "newest",
+            "options": [
+                { "value": "newest", "label": "Newest First" },
+                { "value": "oldest", "label": "Oldest First" }
+            ]
+        },
+        {
+            "type": "number",
+            "id": "posts_to_show",
+            "label": "Number of Posts to Show",
+            "default": 3
+        }
+    ],
+    "presets": [
+        {
+            "name": "Blog Posts",
+            "category": "Blog"
+        }
+    ]
+}
+{% endschema %}

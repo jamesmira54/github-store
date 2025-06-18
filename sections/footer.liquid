@@ -1,22 +1,54 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+<footer class="block">
+  <div class="bg-gray-100 py-10 px-4 w-full">
+    <div>
+      <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="footer__column">
+           {% if section.settings.logo %}
+            <img 
+              width="100%"
+              height="100%"
+              src="{{ section.settings.logo | image_url: width: 80, height: 80, crop: 'center' }}" 
+              class="mx-auto mb-4 w-20 h-20 rounded-full object-cover"
+            >
+          {% endif %}
+          <h3 class="text-lg font-semibold mb-4">{{ section.settings.footer_title }}</h3>
+          <p class="text-gray-600 mb-4">{{ section.settings.footer_description }}</p>
+          {% if section.settings.show_social %}
+            <div class="footer__social flex gap-3 mt-4">
+              {% render 'social-icons' %}
+            </div>
+          {% endif %}
+        </div>
+        {% for block in section.blocks %}
+          <div class="footer__column">
+            <h3 class="text-lg font-semibold mb-4">{{ block.settings.column_title }}</h3>
+            <ul class="footer__links">
+              {% for link in block.settings.footer_links.links %}
+                <li>
+                  <a href="{{ link.url }}" class="hover:underline">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+    <div>
+      <div class="footer__copyright">
+        &copy;
+        {{ 'now' | date: '%Y' }}
+        {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+      </div>
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+      <div class="footer__payment">
+        {% if section.settings.show_payment_icons %}
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag }}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
   </div>
 </footer>
 
@@ -42,15 +74,57 @@
   "name": "t:general.footer",
   "settings": [
     {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer Logo"
+    },
+    {
+      "type": "text",
+      "id": "footer_title",
+      "label": "Footer Title"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_description",
+      "label": "Footer Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show Social Icons",
+      "default": false
     },
     {
       "type": "checkbox",
       "id": "show_payment_icons",
       "label": "t:labels.show_payment_icons",
       "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Footer Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "column_title",
+          "label": "Column Title",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "footer_links",
+          "label": "Menu"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Footer",
+      "category": "Footer"
     }
   ]
 }

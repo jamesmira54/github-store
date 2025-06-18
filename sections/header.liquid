@@ -1,36 +1,71 @@
 <header>
-  <h2 class="header__title">
-    {{ shop.name | link_to: routes.root_url }}
-  </h2>
+  <div class="flex items-center justify-between bg-white px-4 py-[20px]">
 
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
+    <h2 class="header__title"> 
+      {{ shop.name | link_to: routes.root_url }} 
+    </h2>
+
+    <div class="header__search">
+      {%  render 'search-bar' %}
+    </div>
+    
+    <div class="header__icons">
+      <a class="w-8" href="{{ routes.cart_url }}">
+        {% if cart.item_count > 0 %}
+          <sup>{{ cart.item_count }}</sup>
+        {% endif %}
+        {% comment %} {% render 'icon-cart' %} {% endcomment %}
+        </a>
+      <div class="flex items-center gap-4">
+        <cart-icon></cart-icon>
+        {% if shop.customer_accounts_enabled %}
+          {% if customer %}
+            {% render 'custom-button', 
+              text: 'Account',
+              style: 'primary',
+              url: routes.account_url,
+              rel: 'nofollow',
+            %}
+            {% render 'custom-button',
+              text: 'Logout',
+              url: routes.account_logout_url,
+              style: 'secondary',
+              rel: 'nofollow',
+            %}
+          {% else %}
+            {% render 'custom-button', 
+              text: 'Login', 
+              url: routes.account_login_url,
+              style: 'primary',
+              rel: 'nofollow',
+            %}
+            {% render 'custom-button', 
+              text: 'Register', 
+              url: routes.account_register_url,
+              style: 'secondary',
+              rel: 'nofollow',
+            %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
   </div>
 
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      {{ 'icon-account.svg' | inline_asset_content | link_to: routes.account_url }}
-    {% endif %}
-
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
-      {% endif %}
-
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
+  <div class="flex items-center justify-center bg-white py-[12px] border-t border-gray-200">
+    <nav class="header__menu">
+      {% for link in linklists.main-menu.links %}
+        <a href="{{ link.url }}" class="header__menu-item">
+          {{ link.title }}
+          {% if link.items.size > 0 %}
+            <sup>{{ link.items.size }}</sup>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </nav>
   </div>
 </header>
 
 {% stylesheet %}
-  header {
-    height: 5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
   header a {
     position: relative;
     text-decoration: none;

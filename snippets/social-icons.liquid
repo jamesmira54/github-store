@@ -1,0 +1,11 @@
+{% assign socials = "facebook,twitter,instagram,youtube,tiktok,linkedin" | split: "," %}
+
+{% for platform in socials %}
+  {% assign setting_key = platform | append: '_url' %}
+  {% assign url = settings[setting_key] %}
+  {% if url != blank %}
+    <a href="{{ url }}" target="_blank" rel="noopener">
+      <img width="100%" height="100%" src="{{ platform | prepend: 'icon-' | append: '.svg' | asset_url }}" alt="{{ platform | capitalize }}" class="w-5 h-5">
+    </a>
+  {% endif %}
+{% endfor %}
