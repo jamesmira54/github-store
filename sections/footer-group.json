@@ -13,8 +13,39 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "column_GXY4RB": {
+          "type": "column",
+          "settings": {
+            "column_title": "Menu 1",
+            "footer_links": "footer-menu-1"
+          }
+        },
+        "column_zhpCA4": {
+          "type": "column",
+          "settings": {
+            "column_title": "Menu 2",
+            "footer_links": "footer-menu-1"
+          }
+        },
+        "column_hjtVGj": {
+          "type": "column",
+          "settings": {
+            "column_title": "Menu 3",
+            "footer_links": "footer-menu-1"
+          }
+        }
+      },
+      "block_order": [
+        "column_GXY4RB",
+        "column_zhpCA4",
+        "column_hjtVGj"
+      ],
       "settings": {
-        "menu": "",
+        "logo": "shopify://shop_images/guitar-logo.png",
+        "footer_title": "",
+        "footer_description": "",
+        "show_social": true,
         "show_payment_icons": true
       }
     }

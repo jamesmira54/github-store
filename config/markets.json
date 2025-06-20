@@ -8,13 +8,5 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {
-    "facebook_url": "https://www.facebook.com/",
-    "twitter_url": "https://x.com/",
-    "instagram_url": "https://www.instagram.com/",
-    "youtube_url": "https://www.youtube.com/",
-    "tiktok_url": "https://www.tiktok.com/",
-    "linkedin_url": "https://www.linkedin.com/",
-    "content_for_index": []
-  }
+  "markets": {}
 }

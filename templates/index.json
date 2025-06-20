@@ -9,12 +9,173 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
+    "hero_section_DMUNzR": {
+      "type": "hero-section",
+      "name": "Hero Banner",
+      "settings": {
+        "background_image": "shopify://shop_images/close-up-bass-guitar-hands-musician-process-playing-min.jpg",
+        "heading": "Welcome to Our Store",
+        "subheading": "Discover our latest products and offers.",
+        "button_url": "shopify://collections/all",
+        "button_text": "Shop Now"
+      }
+    },
+    "featured_collections_3xyeLc": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_wjR9U3": {
+          "type": "collection",
+          "settings": {
+            "collection": "acoustic-guitar"
+          }
+        },
+        "collection_gEjJ8Q": {
+          "type": "collection",
+          "settings": {
+            "collection": "electric-guitars"
+          }
+        },
+        "collection_gpBgJ7": {
+          "type": "collection",
+          "settings": {
+            "collection": "bass-guitar"
+          }
+        }
+      },
+      "block_order": [
+        "collection_wjR9U3",
+        "collection_gEjJ8Q",
+        "collection_gpBgJ7"
+      ],
+      "name": "Featured Collections",
+      "settings": {
+        "title": "Featured Collections"
+      }
+    },
+    "featured_products_AMqkFd": {
+      "type": "featured-products",
+      "blocks": {
+        "product_MwFpqM": {
+          "type": "product",
+          "settings": {
+            "product": "yamaha-ac5r-are-concert-cutaway-acoustic-electric-guitar-vintage-natural"
+          }
+        },
+        "product_dbAtch": {
+          "type": "product",
+          "settings": {
+            "product": "yamaha-fg830-dreadnought-acoustic-guitar-natural"
+          }
+        },
+        "product_mNBCNT": {
+          "type": "product",
+          "settings": {
+            "product": "fg-fs9-series"
+          }
+        }
+      },
+      "block_order": [
+        "product_MwFpqM",
+        "product_dbAtch",
+        "product_mNBCNT"
+      ],
+      "name": "Featured Products",
+      "settings": {
+        "title": "Featured Products"
+      }
+    },
+    "testimonials_section_XVqKbD": {
+      "type": "testimonials-section",
+      "blocks": {
+        "testimonial_TENiMe": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/Shape_1.png",
+            "quote": "Sample Quote",
+            "author": "Author Name",
+            "position": "Author Position"
+          }
+        },
+        "testimonial_ax6J7Q": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/Shape_1.png",
+            "quote": "Sample Quote",
+            "author": "Author Name",
+            "position": "Author Position"
+          }
+        },
+        "testimonial_H9649r": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/Shape_1.png",
+            "quote": "Sample Quote",
+            "author": "Author Name",
+            "position": "Author Position"
+          }
+        },
+        "testimonial_EkzjYa": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/Shape_1.png",
+            "quote": "Sample Quote",
+            "author": "Author Name",
+            "position": "Author Position"
+          }
+        },
+        "testimonial_ti4BMP": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/Shape_1.png",
+            "quote": "Sample Quote",
+            "author": "Author Name",
+            "position": "Author Position"
+          }
+        },
+        "testimonial_d6DXWP": {
+          "type": "testimonial",
+          "settings": {
+            "avatar": "shopify://shop_images/Shape_1.png",
+            "quote": "Sample Quote",
+            "author": "Author Name",
+            "position": "Author Position"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_TENiMe",
+        "testimonial_ax6J7Q",
+        "testimonial_H9649r",
+        "testimonial_EkzjYa",
+        "testimonial_ti4BMP",
+        "testimonial_d6DXWP"
+      ],
+      "name": "Testimonials Section",
+      "settings": {
+        "title": "Testimonials"
+      }
+    },
+    "blog_posts_bjJbGr": {
+      "type": "blog-posts",
+      "name": "Blog Posts",
+      "settings": {
+        "blog": "news",
+        "title": "Latest Blog Posts",
+        "sort_order": "newest",
+        "posts_to_show": 3
+      }
+    },
+    "cart_notification": {
+      "type": "cart-notification",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "hero_section_DMUNzR",
+    "featured_collections_3xyeLc",
+    "featured_products_AMqkFd",
+    "testimonials_section_XVqKbD",
+    "blog_posts_bjJbGr",
+    "cart_notification"
   ]
 }

@@ -1,5 +1,5 @@
 <section class="testimonial-section py-10 px-4">
-  <h2 class="text-2xl font-bold mb-6 text-center">{{ section.title }}</h2>
+  <h2 class="text-2xl font-bold mb-6 text-center">{{ section.settings.title }}</h2>
   <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
     {% for block in section.blocks %}
       <div class="bg-white shadow rounded-xl p-6">
@@ -12,9 +12,9 @@
             class="mx-auto mb-4 w-20 h-20 rounded-full object-cover"
           >
         {% endif %}
-        <p class="italic text-gray-700 mb-4">“{{ block.settings.quote }}”</p>
-        <p class="font-semibold text-right">— {{ block.settings.author }}</p>
-        <p class="font-semibold text-right">— {{ block.settings.position }}</p>
+        <p class="italic text-[0.9em] text-gray-700 mb-4">“{{ block.settings.quote }}”</p>
+        <p class="font-thin text-[0.9em] text-left">— {{ block.settings.author }}</p>
+        <p class="font-semibold text-[0.9em]">— {{ block.settings.position }}</p>
       </div>
     {% endfor %}
   </div>

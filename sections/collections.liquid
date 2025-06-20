@@ -1,36 +1,23 @@
-<h1>{{ 'collections.title' | t }}</h1>
-
-<div
-  class="collections {{ section.settings.grid_item_width }}"
-  style="--grid-gap: {{ section.settings.grid_gap }}px"
->
-  {% for collection in collections %}
-    <a class="collection-card" href="{{ collection.url }}">
-      {% if collection.featured_image %}
-        {% render 'image',
-          class: 'collection-card__image',
-          image: collection.featured_image,
-          width: 600,
-          height: 600,
-          crop: 'center'
-        %}
-      {% endif %}
-
-      <div class="collection-card__content">
-        <p>{{ collection.title }}</p>
-
-        {% if collection.description %}
-          <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
-        {% endif %}
+<section class="collection-grid-section px-4 py-10 max-w-8xl mx-auto">
+  <h1 class="text-2xl font-bold text-center mb-8">{{ section.settings.title }}</h1>
+  <div class="collections grid sm:grid-cols-3 lg:grid-cols-4 {{ section.settings.grid_item_width }}" style="--grid-gap: {{ section.settings.grid_gap }}px" >
+    {% for collection in collections %}
+      <div class="bg-white rounded-lg shadow product-item overflow-hidden">
+        <a class="collection-card block relative" href="{{ collection.url }}">
+          {% if collection.featured_image %}
+            <img style="height: 300px !important;" width="100%" height="100%" src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" class="w-full object-cover object-bottom group-hover:scale-105 transition-transform duration-300 h-[300px]">
+          {% endif %}
+          <div class="overlay absolute inset-0 bg-gray-900 opacity-40 transition-all ease-in-out duration-600"></div>
+          <h3 class="text-[18px] text-white font-semibold mb-2 absolute top-[50%] left-[50%] translate-x-[-50%]  transition-all ease-in-out duration-600 whitespace-nowrap">{{ collection.title }}</h3>
+        </a>
       </div>
-    </a>
-  {% endfor %}
-</div>
+    {% endfor %}
+  </div>
+</section>
 
 {% stylesheet %}
   .collections {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(var(--collection-card-size), 100%), 1fr));
     gap: var(--grid-gap);
   }
   .collections--compact {
@@ -39,10 +26,15 @@
   .collections--full {
     --collection-card-size: 280px;
   }
-  .collection-card {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  .product-item {
+    border-radius: 10px;
+  }
+  .product-item:hover h3 {
+    font-size: 24px;
+  }
+
+  .product-item:hover .overlay {
+    opacity: 100;
   }
 {% endstylesheet %}
 
@@ -50,6 +42,12 @@
 {
   "name": "t:general.collections_grid",
   "settings": [
+     {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop by Category"
+    },
     {
       "type": "select",
       "id": "grid_item_width",
@@ -74,3 +72,4 @@
   "presets": [{ "name": "t:general.collections_grid" }]
 }
 {% endschema %}
+
