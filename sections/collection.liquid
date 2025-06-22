@@ -1,95 +1,40 @@
+<script src="{{ 'filters.js' | asset_url }}" defer></script>
+
 <section class="collection-grid-section px-4 py-10 max-w-8xl mx-auto">
-  <h1 class="text-2xl font-bold text-center mb-8">{{ collection.title }}</h1>
+  
   <div class="flex justify-between gap-10">
     <!-- Sidebar Filters -->
     <aside class="lg:col-span-1 space-y-6">
-      <h2 class="text-xl font-bold">Filters</h2>
-
-      <!-- Shopify Native Filters -->
-      {% if collection.filters.size > 0 %}
-        <form method="GET" id="CollectionFiltersForm">
-          {% for filter in collection.filters %}
-            <div class="filter-group mb-4">
-              <h3 class="text-sm font-semibold mb-2">{{ filter.label }}</h3>
-
-              {% case filter.type %}
-                {% when 'price_range' %}
-                  <div class="flex items-center space-x-2">
-                    <input type="number" name="{{ filter.min_value.param_name }}" class="border p-1 w-20" placeholder="Min"
-                            value="{{ filter.min_value.value | default: '' }}">
-                    <span>–</span>
-                    <input type="number" name="{{ filter.max_value.param_name }}" class="border p-1 w-20" placeholder="Max"
-                            value="{{ filter.max_value.value | default: '' }}">
-                  </div>
-
-                {% when 'list' %}
-                  <ul class="space-y-1">
-                    {% for value in filter.values %}
-                      <li>
-                        <label class="flex items-center space-x-2 text-sm">
-                          <input type="checkbox"
-                                  name="{{ value.param_name }}"
-                                  value="{{ value.value }}"
-                                  {% if value.active %}checked{% endif %}
-                                  {% if value.count == 0 and value.active == false %}disabled{% endif %}>
-                          <span>{{ value.label }} ({{ value.count }})</span>
-                        </label>
-                      </li>
-                    {% endfor %}
-                  </ul>
-              {% endcase %}
-            </div>
-          {% endfor %}
-          <button type="submit" class="mt-4 bg-black text-white px-4 py-2 rounded">Apply Filters</button>
-        </form>
-      {% endif %}
+      <collection-filters>
+        {% render 'filters' %}
+      </collection-filters>
     </aside>
 
-    <div class="collection-products grid sm:grid-cols-1 lg:grid-cols-2 gap-4">
-      {% paginate collection.products by 20 %}
-        {% for product in collection.products %}
-          <div class="collection-product">
-            <div class="flex flex-col md:flex-row border-amber-200 rounded overflow-hidden shadow-sm p-3 items-center">
-              <div class="md:w-[30%] w-full">
-                {% if product.featured_image %}
-                  <a href="{{ product.url }}" class="block mb-3">
-                    <img 
-                      width="100%"
-                      height="100%"
-                      src="{{ product.featured_image | image_url: width: 800 }}" 
-                      alt="{{ product.title | escape }}" 
-                      class="w-full h-full object-cover"
-                    >
-                  </a>
-                {% endif %}
-              </div>
-              <!-- Product Details -->
-              <div class="p-6 flex flex-col justify-center md:w-[70%] w-full">
-                <h3 class="text font-semibold mb-2">
-                  <a href="{{ product.url }}" class="hover:underline">{{ product.title }} </a>
-                </h3>
-                <p class="text-gray-600 mb-4">{{ product.description | strip_html | truncatewords: 20 }}</p>
-                {% if product.available %}
-                  <p class="text-green-600 font-semibold mb-4">In Stock</p>
-                {% else %}
-                  <p class="text-red-600 font-semibold mb-4">Out of Stock</p>
-                {% endif %}
-                <p class="text-lg text-gray-700 mb-4">{{ product.price | money }}</p>
-                <product-form>
-                  <form method="post" action="{{ routes.cart_add_url }}">
-                    <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-                    <button type="submit" class="bg-orange-600 text-white px-6 py-2 rounded hover:bg-red-600 transition">
-                      Add to Cart
-                    </button>
-                  </form>
-                </product-form>
-              </div>
+    <div data-products-grid>
+      <div class="flex justify-between">
+        <h1 class="text-2xl font-bold text-center mb-8">{{ collection.title }}</h1>
+        <form id="CollectionSortForm" class="mb-6 justify-end">
+          <label for="sort_by" class="text-sm font-medium mr-2">Sort by:</label>
+          <select name="sort_by" id="sort_by" class="border px-2 py-1">
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+                {{ option.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </form>
+      </div>
+      {% if collection.products.size > 0 %}
+        <div class="collection-products grid sm:grid-cols-1 lg:grid-cols-2 gap-4">
+          {% for product in collection.products %}
+            <div class="collection-product">
+              {% render 'product-card', product: product %}
             </div>
-          </div>
-        {% endfor %}
-
-        {{ paginate | default_pagination }}
-      {% endpaginate %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-center text-gray-600">No products match your filters.</p>
+      {% endif %}
     </div>
   </div>
 </section>
@@ -98,7 +43,7 @@
   .collection-products {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  }
+}
 {% endstylesheet %}
 
 {% schema %}

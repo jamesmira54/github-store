@@ -114,3 +114,7 @@ body {
 .shopify-section > .full-width {
   grid-column: 1 / -1;
 }
+
+a, button, input[submit] {
+  cursor: pointer;
+}

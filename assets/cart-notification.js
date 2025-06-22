@@ -45,7 +45,7 @@ class CartNotification extends HTMLElement {
         this.attachEvents();
 
 
-        // Set a timeout to hide the notification after 5 seconds
+        // Set a timeout to hide the notification after 8 seconds
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
             this.hideNotification();
