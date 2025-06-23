@@ -1,10 +1,10 @@
 // Proceed to checkout functionality
 document.addEventListener('DOMContentLoaded', () => {
   const buyNowBtn = document.getElementById('buy-now');
-  const quantityInput = document.getElementById('quantity');
+  const quantityInput = document.getElementById('product-quantity');
 
   buyNowBtn.addEventListener('click', async () => {
-    const selectedInput = document.querySelector('input[name="variant-id"]:checked');
+    const selectedInput = document.querySelector('input[name="variant-id"]');
     const quantity = parseInt(quantityInput.value) || 1;
 
     let variantId;
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Set initial image index
-  const variantRadios = document.querySelectorAll('input[name="variant-id"]');
+  const variantRadios = document.querySelectorAll('input[name="option-color"]');
 
   const initialThumb = thumbnails.find(t => t.dataset.full === mainImage.src);
 
@@ -121,48 +121,75 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
+  const productData = JSON.parse(document.getElementById('product-data').textContent);
   const priceEl = document.getElementById('product-price');
-  const quantityInput = document.getElementById('quantity');
-  const variantRadios = document.querySelectorAll('input[name="variant-id"]');
+  const totalEl = document.getElementById('product-total');
+  const variantIdInput = document.getElementById('variant-id');
+  const optionInputs = document.querySelectorAll('.variant-option');
+  const quantityInput = document.getElementById('product-quantity');
 
-  const defaultPrice = parseInt(document.getElementById('product-data')?.dataset.defaultPrice || 0);
-  let selectedPrice = defaultPrice;
+  function getSelectedOptions() {
+    const selectedOptions = [];
+    const optionGroups = {};
 
-  const selectedInput = document.querySelector('input[name="variant-id"]:checked');
-  if (selectedInput) {
-    selectedPrice = parseInt(selectedInput.dataset.price);
+
+    optionInputs.forEach(input => {
+      const name = input.name;
+      if (!optionGroups[name]) optionGroups[name] = [];
+      optionGroups[name].push(input);
+    });
+
+    Object.keys(optionGroups).forEach(name => {
+      const group = optionGroups[name];
+      const selected = group.find(input => input.checked);
+      if (selected) selectedOptions.push(selected.value);
+    });
+
+    return selectedOptions;
   }
 
+  function findMatchingVariant(options) {
+    return productData.variants.find(v => {
+      const variantOptions = [v.option1, v.option2, v.option3].filter(Boolean);
+      return variantOptions.every((opt, i) => opt === options[i]);
+    });
+  }
 
+  function updatePriceAndVariant(variant) {
+    if (!variant) return;
+    
+    const quantity = parseInt(quantityInput.value) || 1;
+    const formattedPrice = formatCurrency(variant.price);
+    const total = variant.price * quantity;
+    const formattedTotal = formatCurrency(total);
 
-  // Format price as currency (you can set this dynamically via cart.currency)
+    priceEl.innerHTML = formattedPrice;
+    totalEl.innerHTML = formattedTotal;
+    variantIdInput.value = variant.id;
+  }
+
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat(undefined, {
       style: 'currency',
-      currency: 'PHP' // Replace with store currency if dynamic
+      currency: 'PHP'
     }).format(amount / 100);
   };
 
-  function updatePriceDisplay() {
-    const quantity = parseInt(quantityInput.value) || 1;
-    const total = selectedPrice * quantity;
-    priceEl.textContent = formatCurrency(total);
+  function handleUpdate() {
+    const options = getSelectedOptions();
+    if (options.length === productData.options.length) {
+      const variant = findMatchingVariant(options);
+      alert(variant)
+      updatePriceAndVariant(variant);
+    }
   }
 
-  // Listen to variant change
-  variantRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      selectedPrice = parseInt(radio.dataset.price);
-      updatePriceDisplay();
-    });
+
+  optionInputs.forEach(input => {
+    input.addEventListener('change', handleUpdate);
   });
 
-  // Listen to quantity change
-  quantityInput.addEventListener('input', () => {
-    updatePriceDisplay();
-  });
+  quantityInput.addEventListener('input', handleUpdate);
 
-  // Initialize price on page load
-  updatePriceDisplay();
 });

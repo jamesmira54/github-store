@@ -1,0 +1,34 @@
+<div class="flex gap-4">
+    <div style="flex: none;" class="grid md:grid-cols-2 gap-2">
+    {% for image in product.images %}
+        {% assign index = forloop.index0 %}
+        <img 
+        height="100%"
+        width="100%"
+        src="{{ image | image_url: width: 100 }}"
+        alt="Thumbnail"
+        class="w-16 h-16 object-cover border rounded cursor-pointer thumbnail hover:ring-2 hover:ring-blue-500"
+        data-index="{{ index }}"
+        data-full="{{ image | image_url: width: 1000 }}"
+        >
+    {% endfor %}
+    </div>
+
+    <!-- Main Image with Nav Buttons -->
+    <div class="relative block max-h-[500px]">
+    <button id="prev-img" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
+        ◀
+    </button>
+    <img
+        height="100%"
+        width="100%"
+        id="main-product-image"
+        src="{{ product.featured_image | image_url: width: 1000 }}"
+        alt="{{ product.title }}"
+        class="w-full max-w-xl object-contain h-[400px] rounded-xl transition-transform duration-200 group-hover:scale-105 cursor-zoom-in"
+    >
+    <button id="next-img" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
+        ▶
+    </button>
+    </div>
+</div>

@@ -24,8 +24,10 @@ class CartNotification extends HTMLElement {
         console.log(event);
         this.innerHTML = `
             <div class="bg-white border rounded-lg p-4 max-w-sm w-full shadow-xl">
+                <p class="mb-2">Added to Cart!</p>
                 <button class="cart-notification__close absolute top-2 right-2 text-gray-500 hover:text-black">✕</button>
-                <div class="flex gap-4 items-center">
+                <hr/>
+                <div class="flex gap-4 items-center mt-4">
                     <img src="${item.image}" alt="${item.product_title}" class="w-16 h-16 object-cover rounded" />
                     <div>
                         <p class="text-sm font-medium text-gray-900">${item.product_title}</p>

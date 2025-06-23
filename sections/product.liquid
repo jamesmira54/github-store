@@ -1,84 +1,36 @@
+
+<script src="{{ 'product-script.js' | asset_url }}" defer></script>
+<script type="application/json" id="product-data"> {{ product | json }} </script>
+
 {% assign current_variant = product.selected_or_first_available_variant %}
-<div id="product-data"
-     data-default-price="{{ product.variants.first.price }}"
-     data-default-id="{{ product.variants.first.id }}">
-</div>
+
+
 <section class="max-w-5xl mx-auto px-4 py-10 space-y-8">
   <div class="grid md:grid-cols-2 gap-10">
-    <div class="flex gap-4">
-      <!-- Thumbnail Column (same as before, limited to 6) -->
-      <div style="flex: none;" class="grid md:grid-cols-2 gap-2">
-        {% for image in product.images %}
-          {% assign index = forloop.index0 %}
-          <img 
-            height="100%"
-            width="100%"
-            src="{{ image | image_url: width: 100 }}"
-            alt="Thumbnail"
-            class="w-16 h-16 object-cover border rounded cursor-pointer thumbnail hover:ring-2 hover:ring-blue-500"
-            data-index="{{ index }}"
-            data-full="{{ image | image_url: width: 1000 }}"
-          >
-        {% endfor %}
-      </div>
-
-      <!-- Main Image with Nav Buttons -->
-      <div class="relative block max-h-[500px]">
-        <button id="prev-img" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
-          ◀
-        </button>
-        <img
-          height="100%"
-          width="100%"
-          id="main-product-image"
-          src="{{ product.featured_image | image_url: width: 1000 }}"
-          alt="{{ product.title }}"
-          class="w-full max-w-xl object-contain h-[400px] rounded-xl transition-transform duration-200 group-hover:scale-105 cursor-zoom-in"
-        >
-        <button id="next-img" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
-          ▶
-        </button>
-      </div>
-    </div>
+    {% render 'thumbnails' %}
 
     <!-- Product Details -->
     <div>
       <h1 class="text-2xl font-bold mb-2">{{ product.title }}</h1>
-      <p id="product-price" class="text-lg font-semibold text-gray-800 mb-4">
-        {{ current_variant.price | money }}
+      {% render 'variants', product: product %}
+
+      <p class="text-sm font-normal">
+        Price: <span id="product-price">{{ current_variant.price | money }}</span>
       </p>
 
-      <!-- Variant Swatches -->
-      {% if product.variants.size > 1 %}
-        <div class="mb-4 space-y-2">
-          <p class="text-sm font-medium text-gray-700">Choose Variant</p>
-          <div class="flex gap-2 flex-wrap">
-            {% for variant in product.variants %}
-              <label class="cursor-pointer">
-                <input 
-                  type="radio" 
-                  name="variant-id" 
-                  value="{{ variant.id }}" 
-                  class="sr-only peer" 
-                  {% if variant.id == current_variant.id %}checked{% endif %}
-                  data-image="{{ variant.featured_image | image_url: width: 1000 }}"
-                  data-price="{{ variant.price }}"
-                >
-                <div class="border rounded-md p-1 peer-checked:ring-2 ring-blue-500 transition">
-                  <img width="100%" height="100%" src="{{ variant.featured_image | image_url: width: 60 }}" alt="{{ variant.title }}" class="w-12 h-12 object-cover rounded">
-                </div>
-              </label>
-            {% endfor %}
-          </div>
-        </div>
-      {% endif %}
 
       <!-- Quantity Selector -->
       <div class="mb-4">
         <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-        <input type="number" id="quantity" name="quantity" min="1" value="1"
-              class="w-24 border border-gray-300 rounded p-2 mt-1">
+        <input type="number" id="product-quantity" name="quantity" min="1" value="1" class="w-24 border border-gray-300 rounded p-2 mt-1">
       </div>
+
+      <p class="my-4 text-lg font-semibold">
+        Total: <span id="product-total">{{ current_variant.price | money }}</span>
+      </p>
+
+      <input type="hidden" name="variant-id" id="variant-id" value="{{ current_variant.id }}">
+
 
       <!-- Checkout Button -->
       <button 
