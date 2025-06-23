@@ -1,5 +1,5 @@
 <div class="flex gap-4">
-    <div style="flex: none;" class="grid md:grid-cols-2 gap-2">
+    <div class="grid grid-cols-2 gap-2 w-max max-h-[200px]">
     {% for image in product.images %}
         {% assign index = forloop.index0 %}
         <img 
@@ -7,7 +7,7 @@
         width="100%"
         src="{{ image | image_url: width: 100 }}"
         alt="Thumbnail"
-        class="w-16 h-16 object-cover border rounded cursor-pointer thumbnail hover:ring-2 hover:ring-blue-500"
+        class="w-16 h-[95px] object-contain border rounded cursor-pointer thumbnail hover:ring-2 hover:ring-blue-500"
         data-index="{{ index }}"
         data-full="{{ image | image_url: width: 1000 }}"
         >
@@ -15,7 +15,7 @@
     </div>
 
     <!-- Main Image with Nav Buttons -->
-    <div class="relative block max-h-[500px]">
+    <div class="relative block max-h-[405px]">
     <button id="prev-img" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
         ◀
     </button>
@@ -25,7 +25,7 @@
         id="main-product-image"
         src="{{ product.featured_image | image_url: width: 1000 }}"
         alt="{{ product.title }}"
-        class="w-full max-w-xl object-contain h-[400px] rounded-xl transition-transform duration-200 group-hover:scale-105 cursor-zoom-in"
+        class="w-[400px] object-contain max-h-[530px] rounded-xl transition-transform duration-200 group-hover:scale-105 cursor-zoom-in"
     >
     <button id="next-img" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
         ▶
