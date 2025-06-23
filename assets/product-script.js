@@ -180,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const options = getSelectedOptions();
     if (options.length === productData.options.length) {
       const variant = findMatchingVariant(options);
-      alert(variant)
       updatePriceAndVariant(variant);
     }
   }
