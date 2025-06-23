@@ -25,6 +25,13 @@ svg {
   max-width: 100%;
 }
 
+picture,
+video,
+canvas,
+svg {
+  height: auto;
+}
+
 input,
 textarea,
 select {
