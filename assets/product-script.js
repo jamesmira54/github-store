@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const mainImage = document.getElementById('main-product-image');
   const thumbnails = [...document.querySelectorAll('.thumbnail')];
-  const nextBtn = document.getElementById('next-img');
-  const prevBtn = document.getElementById('prev-img');
+  // const nextBtn = document.getElementById('next-img');
+  // const prevBtn = document.getElementById('prev-img');
   
   let currentIndex = 0;
 
@@ -71,15 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Next / Prev buttons
-  nextBtn.addEventListener('click', () => {
-    const next = (currentIndex + 1) % thumbnails.length;
-    loadImage(next);
-  });
+  // nextBtn.addEventListener('click', () => {
+  //   const next = (currentIndex + 1) % thumbnails.length;
+  //   loadImage(next);
+  // });
 
-  prevBtn.addEventListener('click', () => {
-    const prev = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
-    loadImage(prev);
-  });
+  // prevBtn.addEventListener('click', () => {
+  //   const prev = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+  //   loadImage(prev);
+  // });
 
   // Set initial image index
   const variantRadios = document.querySelectorAll('input[name="option-color"]');
