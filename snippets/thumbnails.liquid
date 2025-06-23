@@ -15,20 +15,14 @@
     </div>
 
     <!-- Main Image with Nav Buttons -->
-    <div class="relative block max-h-[405px]">
-    <button id="prev-img" class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
-        ◀
-    </button>
-    <img
-        height="100%"
-        width="100%"
-        id="main-product-image"
-        src="{{ product.featured_image | image_url: width: 1000 }}"
-        alt="{{ product.title }}"
-        class="w-[400px] object-contain max-h-[530px] rounded-xl transition-transform duration-200 group-hover:scale-105 cursor-zoom-in"
-    >
-    <button id="next-img" class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-1 rounded shadow hidden group-hover:block z-10">
-        ▶
-    </button>
+    <div class="relative block max-h-[505px]">
+        <img
+            height="100%"
+            width="100%"
+            id="main-product-image"
+            src="{{ product.featured_image | image_url: width: 1000 }}"
+            alt="{{ product.title }}"
+            class="w-[400px] object-cover max-h-[530px] rounded-xl transition-transform duration-200 group-hover:scale-105 cursor-zoom-in"
+        >
     </div>
 </div>
