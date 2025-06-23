@@ -55,29 +55,36 @@
     "featured_products_AMqkFd": {
       "type": "featured-products",
       "blocks": {
-        "product_MwFpqM": {
-          "type": "product",
-          "settings": {
-            "product": "yamaha-ac5r-are-concert-cutaway-acoustic-electric-guitar-vintage-natural"
-          }
-        },
         "product_dbAtch": {
           "type": "product",
           "settings": {
             "product": "yamaha-fg830-dreadnought-acoustic-guitar-natural"
           }
         },
-        "product_mNBCNT": {
+        "product_AFpqgq": {
           "type": "product",
           "settings": {
-            "product": "fg-fs9-series"
+            "product": "rickenbacker-4003-stereo-bass-guitar-jetglo"
+          }
+        },
+        "product_aEKBVw": {
+          "type": "product",
+          "settings": {
+            "product": "esp-ltd-sn-1007-ht-baritone-electric-guitar-black-blast"
+          }
+        },
+        "product_i3iUcK": {
+          "type": "product",
+          "settings": {
+            "product": "marshall-dsl40cr-40-watt-1-x-12-inch-combo-amplifier"
           }
         }
       },
       "block_order": [
-        "product_MwFpqM",
         "product_dbAtch",
-        "product_mNBCNT"
+        "product_AFpqgq",
+        "product_aEKBVw",
+        "product_i3iUcK"
       ],
       "name": "Featured Products",
       "settings": {
