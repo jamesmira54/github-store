@@ -3,67 +3,69 @@
 {% for option in product.options_with_values %}
   {% assign option_index = forloop.index0 %}
   <div class="mb-4 space-y-1">
-    <p class="text-sm font-medium text-gray-700">{{ option.name }}</p>
-    <div class="flex flex-wrap gap-2">
-      {% for value in option.values %}
-        {% assign variant_match = nil %}
-        {% for variant in product.variants %}
-          {% if variant.options[option_index] == value %}
-            {% assign variant_match = variant %}
-            {% break %}
+    {% unless option.name == 'Title' %}
+      <p class="text-sm font-medium text-gray-700">{{ option.name }}</p>
+      <div class="flex flex-wrap gap-2">
+        {% for value in option.values %}
+          {% assign variant_match = nil %}
+          {% for variant in product.variants %}
+            {% if variant.options[option_index] == value %}
+              {% assign variant_match = variant %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+  
+          {% if option.name == 'Color' and variant_match and variant_match.featured_image %}
+            <label class="cursor-pointer block relative mb-5">
+              <input
+                type="radio"
+                name="option-{{ option.name | handleize }}"
+                value="{{ value }}"
+                class="sr-only peer variant-option"
+                {% if variant_match.id == current_variant.id %}checked{% endif %}
+                data-index="{{ option_index }}"
+                data-image="{{ variant_match.featured_image | image_url: width: 1000 }}"
+                data-price="{{ variant_match.price }}"
+              >
+              <div class="border rounded-md p-1 peer-checked:ring-2 ring-blue-500 transition">
+                <img width="100%" height="100%" src="{{ variant_match.featured_image | image_url: width: 60 }}" alt="{{ value }}" class="w-10 h-10 object-cover rounded h-auto">
+              </div>
+              <span class="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-xs text-gray-700 hidden peer-checked:block">
+                {{ value }}
+              </span>
+            </label>
+          
+          {% elsif option.name == 'Include Guitar Bag' %}
+            <label class="cursor-pointer flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="option-{{ option.name | handleize }}"
+                value="{{ value }}"
+                class="accent-blue-500 variant-option"
+                data-index="{{ option_index }}"
+              >
+              <span class="text-sm">{{ value }}</span>
+            </label>
+  
+          {% else %}
+            <label class="cursor-pointer">
+              <input
+                type="radio"
+                name="option-{{ option.name | handleize }}"
+                value="{{ value }}"
+                class="sr-only peer variant-option"
+                {% if variant_match and variant_match.id == current_variant.id %}checked{% endif %}
+                data-price="{{ variant_match.price }}"
+                data-index="{{ option_index }}"
+              >
+              <div class="px-3 py-1 border rounded-md peer-checked:bg-black peer-checked:text-white text-sm font-medium">
+                {{ value }}
+              </div>
+            </label>
           {% endif %}
         {% endfor %}
-
-        {% if option.name == 'Color' and variant_match and variant_match.featured_image %}
-          <label class="cursor-pointer block relative mb-5">
-            <input
-              type="radio"
-              name="option-{{ option.name | handleize }}"
-              value="{{ value }}"
-              class="sr-only peer variant-option"
-              {% if variant_match.id == current_variant.id %}checked{% endif %}
-              data-index="{{ option_index }}"
-              data-image="{{ variant_match.featured_image | image_url: width: 1000 }}"
-              data-price="{{ variant_match.price }}"
-            >
-            <div class="border rounded-md p-1 peer-checked:ring-2 ring-blue-500 transition">
-              <img width="100%" height="100%" src="{{ variant_match.featured_image | image_url: width: 60 }}" alt="{{ value }}" class="w-10 h-10 object-cover rounded h-auto">
-            </div>
-            <span class="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-xs text-gray-700 hidden peer-checked:block">
-              {{ value }}
-            </span>
-          </label>
-        
-        {% elsif option.name == 'Include Guitar Bag' %}
-          <label class="cursor-pointer flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="option-{{ option.name | handleize }}"
-              value="{{ value }}"
-              class="accent-blue-500 variant-option"
-              data-index="{{ option_index }}"
-            >
-            <span class="text-sm">{{ value }}</span>
-          </label>
-
-        {% else %}
-          <label class="cursor-pointer">
-            <input
-              type="radio"
-              name="option-{{ option.name | handleize }}"
-              value="{{ value }}"
-              class="sr-only peer variant-option"
-              {% if variant_match and variant_match.id == current_variant.id %}checked{% endif %}
-              data-price="{{ variant_match.price }}"
-              data-index="{{ option_index }}"
-            >
-            <div class="px-3 py-1 border rounded-md peer-checked:bg-black peer-checked:text-white text-sm font-medium">
-              {{ value }}
-            </div>
-          </label>
-        {% endif %}
-      {% endfor %}
-    </div>
+      </div>
+    {% endunless %}
   </div>
 {% endfor %}
 
