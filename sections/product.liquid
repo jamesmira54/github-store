@@ -1,58 +1,14 @@
 
-<script src="{{ 'product-script.js' | asset_url }}" defer></script>
-<script type="application/json" id="product-data"> {{ product | json }} </script>
-
-{% assign current_variant = product.selected_or_first_available_variant %}
+{% comment %} <script src="{{ 'product-script.js' | asset_url }}" defer></script> {% endcomment %}
+{% comment %} <script type="application/json" id="product-data"> {{ product | json }} </script> {% endcomment %}
 
 
 <section class="max-w-5xl mx-auto px-4 py-10 space-y-8">
-  <div class="grid grid-cols-[auto_1fr] gap-4 items-start h-[540px] overflow-y-auto p-2">
-    {% render 'thumbnails' %}
-
-    <!-- Product Details -->
-    <div>
-      <h1 class="text-2xl font-bold mb-2">{{ product.title }}</h1>
-      {% render 'variants', product: product %}
-
-      <p class="text-sm font-normal">
-        Price: <span id="product-price">{{ current_variant.price | money }}</span>
-      </p>
-
-
-      <!-- Quantity Selector -->
-      <div class="mb-4">
-        <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-        <input type="number" id="product-quantity" name="quantity" min="1" value="1" class="w-24 border border-gray-300 rounded p-2 mt-1">
-      </div>
-
-      <p class="my-4 text-lg font-semibold">
-        Total: <span id="product-total">{{ current_variant.price | money }}</span>
-      </p>
-
-      <input type="hidden" name="variant-id" id="variant-id" value="{{ current_variant.id }}">
-
-
-      <!-- Checkout Button -->
-      <button 
-        id="buy-now" 
-        class="bg-orange-600 text-white px-6 py-3 rounded font-semibold hover:bg-gray-900 transition"
-        data-default-variant-id="{{ product.variants.first.id }}"
-      >
-        Proceed to Checkout
-      </button>
-    </div>
-  </div>
-
-  <!-- Product Description -->
-  <div class="prose max-w-none">
-    {{ product.description }}
-  </div>
-
   <!-- Product Reviews -->
-  <div id="product-reviews" class="pt-10 border-t mt-10">
+  {% comment %} <div id="product-reviews" class="pt-10 border-t mt-10">
     <h2 class="text-xl font-bold mb-4">Customer Reviews</h2>
     <div id="shopify-product-reviews" data-id="{{ product.id }}"></div>
-  </div>
+  </div> {% endcomment %}
 </section>
 
 {% schema %}

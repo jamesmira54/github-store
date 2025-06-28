@@ -19,12 +19,11 @@
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
-
+    <cart-notification section-id="cart-notification" class="fixed top-2 right-2 z-50 transition duration-300 ease-in-out hidden opacity-0 translate-y-4"></cart-notification>
     {% sections 'footer-group' %}
-    
-    <script src="{{ 'product-form.js' | asset_url }}" defer></script>
-    <script src="{{ 'cart-notification.js' | asset_url }}" defer></script>
     <script src="{{ 'cart-icon.js' | asset_url }}" defer></script>
-    <script src="{{ 'cart-script.js' | asset_url }}" defer></script>
+    <script src="{{ 'cart-notification.js' | asset_url }}" defer></script>
+    <script src="{{ 'product-form.js' | asset_url }}" defer></script>
+    {% comment %} <script src="{{ 'cart-script.js' | asset_url }}" defer></script> {% endcomment %}
   </body>
 </html>
