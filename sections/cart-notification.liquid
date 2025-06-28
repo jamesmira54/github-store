@@ -1,23 +1,15 @@
 
 {% assign sorted_items = cart.items | sort: 'updated_at' %}
-{% assign item = sorted_items | last %}
+{% assign item = sorted_items | first %}
 
 {% if item %}
     <div class="bg-white border rounded-lg p-4 max-w-sm w-full shadow-xl relative">
         <p class="mb-2">Added to Cart!</p>
         <button class="cart-notification__close absolute top-2 right-2 text-gray-500 hover:text-black">✕</button>
         <hr/>
-        <div class="flex gap-4 items-center mt-4">
-            <img width="100%" height="100%" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" class="w-16 h-16 object-cover rounded" />
-            <div>
-            <p class="text-sm font-medium text-gray-900">{{ item.title }}</p>
-            <p class="text-sm text-gray-600 mt-2">
-                Price: {{ item.final_line_price | money }} | Qty: {{ item.quantity }}
-            </p>
-            </div>
-        </div>
+        <div id="cart-notification-product" class="cart-notification-product"></div>
         <div class="flex justify-between mt-4 gap-2">
-            <a href="/cart" class="w-1/2 text-center bg-gray-200 hover:bg-gray-300 text-sm text-gray-800 font-semibold py-2 px-3 rounded">View Cart ({{ cart.item_count }})</a>
+            <a href="{{ routes.cart_url }}" class="w-1/2 text-center bg-gray-200 hover:bg-gray-300 text-sm text-gray-800 font-semibold py-2 px-3 rounded">View Cart ({{ cart.item_count }})</a>
             <a href="/checkout" class="w-1/2 text-center bg-black hover:bg-gray-900 text-sm text-white font-semibold py-2 px-3 rounded">Checkout</a>
         </div>
     </div>

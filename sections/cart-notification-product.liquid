@@ -1,0 +1,15 @@
+{% if cart != empty  %}
+    {% for item in cart.items %}
+        <div id="cart-notification-product-{{ item.key }}" class="cart-notification-product">
+            <div class="flex gap-4 items-center mt-4">
+                <img width="100%" height="100%" src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" class="w-16 h-16 object-cover rounded" />
+                <div>
+                <p class="text-sm font-medium text-gray-900">{{ item.title }}</p>
+                <p class="text-sm text-gray-600 mt-2">
+                    Price: {{ item.final_line_price | money }} | Qty: {{ item.quantity }}
+                </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}

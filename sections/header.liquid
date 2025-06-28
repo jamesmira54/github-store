@@ -26,22 +26,16 @@
 
     <div class="header__icons">
       <div class="flex items-center gap-4">
-        <cart-icon>
-          <a href="/cart" class="cart-link flex items-center">
-            {% render 'icon-cart' %}
-            <span class="cart-count w" style="
-              background: red;
-              color: white;
-              border-radius: 50%;
-              padding: 0 6px;
-              font-size: 12px;
-              margin-left: 4px;
-              display: none;
-            ">
-              0
-            </span>
-          </a>
-        </cart-icon>
+        <a href="{{ routes.cart_url }}" class="cart-link flex items-center" id="cart-icon-bubble">
+          {% render 'icon-cart' %}
+            {%- if cart != empty -%}
+              <div class="cart-count-bubble">
+                {%- if cart.item_count < 100 -%}
+                  <span aria-hidden="true">{{ cart.item_count }}</span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+        </a>
 
         {% if shop.customer_accounts_enabled %}
           {% if customer %}
