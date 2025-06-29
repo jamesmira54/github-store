@@ -171,10 +171,6 @@
         "sort_order": "newest",
         "posts_to_show": 3
       }
-    },
-    "cart_notification": {
-      "type": "cart-notification",
-      "settings": {}
     }
   },
   "order": [
@@ -182,7 +178,6 @@
     "featured_collections_3xyeLc",
     "featured_products_AMqkFd",
     "testimonials_section_XVqKbD",
-    "blog_posts_bjJbGr",
-    "cart_notification"
+    "blog_posts_bjJbGr"
   ]
 }

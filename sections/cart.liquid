@@ -1,57 +1,66 @@
-<section class="max-w-4xl mx-auto px-4 py-8 space-y-6">
-  <h1 class="text-2xl font-bold">Your Cart</h1>
+<script src="{{ 'cart.js' | asset_url }}" defer></script>
 
-  {% if cart.item_count > 0 %}
-    <form id="cart-form" method="post" action="/cart" class="space-y-6">
-      <div class="space-y-4">
+<cart-page section-id="{{ section.id }}">
+  <div class="max-w-5xl mx-auto px-4 py-8 space-y-6">
+    <h1 class="text-2xl font-bold">Your Cart</h1>
+    {% if cart.item_count > 0  %}
+      <form action="{{ routes.cart_url }}" method="post" class="space-y-6">
         {% for item in cart.items %}
-          <div class="flex items-center justify-between gap-4 border-b pb-4">
+          <div class="flex flex-row justify-between items-center sm:items-center border p-4 rounded shadow-sm gap-5" data-item-key="{{ item.key }}">
             <div class="flex gap-4 items-center">
-              <img width="100%" height="100%" src="{{ item.image | image_url: width: 100 }}" alt="{{ item.title }}" class="w-16 h-16 rounded object-cover">
-              <div>
-                <p class="font-medium text-gray-800">{{ item.product.title }}</p>
-                <p class="text-sm text-gray-500">{{ item.variant.title }}</p>
-                <p class="text-sm font-semibold text-gray-700">{{ item.final_line_price | money }}</p>
+              <img width="100%" height="100%" src="{{ item.image | image_url: width: 100 }}" alt="{{ item.product.title }}" class="w-16 h-24 rounded object-cover">
+              <div class="w-[300px]">
+                <p class="font-medium text-lg text-gray-900">{{ item.product.title }}</p>
+                <p class="text-sm text-gray-500 mt-1">{{ item.variant.title }}</p>
+                <button type="button" class="remove-btn text-red-600 text-xs mt-2 underline" data-item-key="{{ item.key }}" data-action="remove">
+                  Remove
+                </button>
               </div>
             </div>
-            <div class="flex gap-2 items-center">
-              <!-- Quantity input -->
-              <input type="number" name="updates[]" value="{{ item.quantity }}" min="1"
-                     class="w-16 border rounded p-1 text-center" data-line="{{ forloop.index }}">
-              <!-- Remove button -->
-              <button type="button" data-line="{{ forloop.index }}"
-                      class="remove-item text-red-500 hover:text-red-700 text-sm underline">
-                Remove
-              </button>
+
+            <div class="flex mt-4 sm:mt-0 items-center gap-10">
+              <div class="flex items-center gap-2">
+                <button type="button" class="qty-btn px-2 py-1 text-gray-700 border rounded h-10 hover:bg-gray-900 hover:text-white" data-action="minus">−</button>
+                <input
+                  type="number"
+                  name="updates[]"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  class="block qty-input text-center border rounded h-10 w-24 apperance-none"
+                  data-variant-id="{{ item.variant_id }}"
+                />
+                <button type="button" class="qty-btn px-2 py-1 text-gray-700 border rounded h-10 hover:bg-gray-900 hover:text-white" data-action="plus">+</button>
+              </div>
+              <div class="line-item-price text-md text-gray-800 font-semibold min-w-[80px] text-right">
+                {{ item.final_line_price | money }}
+              </div>
             </div>
           </div>
         {% endfor %}
-      </div>
 
-      <!-- Cart Actions -->
-      <div class="flex justify-between items-center mt-6">
-        <!-- Clear All -->
-        <button type="button" id="clear-cart"
-                class="text-sm text-red-500 hover:text-red-700 underline">
-          Clear Cart
-        </button>
+        <!-- Total Price Section -->
+        <div class="flex justify-between items-center">
+          <p class="text-lg font-semibold">Total:</p>
+          <div class="flex items-center gap-6">
+            <button type="button" class="clear-cart-btn text-red-600 text-sm underline" data-action="clear">
+              Clear Cart
+            </button>
+            <p class="cart-total-price text-lg font-bold text-gray-900">{{ cart.total_price | money }}</p>
+          </div>
+        </div>
 
-        <!-- Update + Checkout -->
-        <div class="flex gap-3">
-          <button type="submit" class="bg-gray-800 text-white text-sm font-semibold py-2 px-4 rounded">
-            Update Cart
-          </button>
-          <a href="/checkout" class="bg-black text-white text-sm font-semibold py-2 px-4 rounded">
-            Checkout
+        <div class="flex justify-end">
+          <a href="/checkout" class="inline-block bg-black hover:bg-gray-900 text-white text-sm font-semibold py-2 px-4 rounded">
+            Proceed to Checkout
           </a>
         </div>
-      </div>
-    </form>
-  {% else %}
-    <p class="text-gray-600">Your cart is empty.</p>
-    <a href="/collections/all" class="inline-block mt-4 bg-black text-white text-sm px-4 py-2 rounded">Continue Shopping</a>
-  {% endif %}
-</section>
+      </form>
+    {% else %}
+      <p>Empty Cart</p>
+    {% endif %}
+  </div>
+</cart-page>
+
 
 {% schema %}
 {
