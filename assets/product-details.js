@@ -17,6 +17,8 @@ class ProductDetails extends HTMLElement {
 
         this.addToCartBtn = this.querySelector('#add-to-cart');
         this.buyNowBtn = this.querySelector('#buy-now');
+        this.cart = document.querySelector('cart-notification');
+        this.qtyButtons = this.querySelector('.qty-btn');
 
 
         // Listen to child <variant-selector>
@@ -30,6 +32,10 @@ class ProductDetails extends HTMLElement {
 
         this.addToCartBtn?.addEventListener('click', () => this.addToCart());
         this.buyNowBtn?.addEventListener('click', () => this.buyItNow());
+
+        this.addEventListener('click', (event) => {
+            if (event.target.closest('.qty-btn')) this.onQuantityClick(event);
+        });
 
     }
 
@@ -88,6 +94,10 @@ class ProductDetails extends HTMLElement {
         const variantId = this.variantIdInput?.value;
         const quantity = parseInt(this.qtyInput?.value, 10) || 1;
 
+        this.cart?.renderLoading();
+        this.cart.classList.remove('hidden', 'opacity-0', 'translate-y-4');
+        this.cart.classList.add('opacity-100', 'translate-y-0');
+
         if (!variantId) {
             alert("Please select a variant.");
             return;
@@ -95,17 +105,17 @@ class ProductDetails extends HTMLElement {
 
         try {
             const res = await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: variantId, quantity })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: variantId, quantity })
             });
 
             if (res.ok) {
-            alert("Added to cart!");
-            // Optionally trigger cart drawer refresh here
+                const addedItemData = await res.json();
+                this.cart?.showNotification(addedItemData.key);
             } else {
-            const err = await res.json();
-            alert(err.description || "Failed to add to cart.");
+                const err = await   res.json();
+                alert(err.description || "Failed to add to cart.");
             }
         } catch (e) {
             alert("Error adding to cart.");
@@ -128,6 +138,17 @@ class ProductDetails extends HTMLElement {
 
         // Redirect to checkout
         window.location.href = checkoutUrl;
+    }
+
+    onQuantityClick(event) {
+        const button = event.target.closest('.qty-btn');
+
+        let quantity = parseInt(this.qtyInput?.value, 10) || 1;
+
+        if (button.dataset.action === 'plus') quantity++;
+        if (button.dataset.action === 'minus') quantity = Math.max(0, quantity - 1);
+
+        this.qtyInput.value = quantity;
     }
 
   

@@ -8,10 +8,16 @@
         {% for item in cart.items %}
           <div class="flex flex-row justify-between items-center sm:items-center border p-4 rounded shadow-sm gap-5" data-item-key="{{ item.key }}">
             <div class="flex gap-4 items-center">
-              <img width="100%" height="100%" src="{{ item.image | image_url: width: 100 }}" alt="{{ item.product.title }}" class="w-16 h-24 rounded object-cover">
+              <a href="{{ item.url }}" class="block">
+                <img width="100%" height="100%" src="{{ item.image | image_url: width: 100 }}" alt="{{ item.product.title }}" class="w-16 h-24 rounded object-cover">
+              </a>
               <div class="w-[300px]">
-                <p class="font-medium text-lg text-gray-900">{{ item.product.title }}</p>
-                <p class="text-sm text-gray-500 mt-1">{{ item.variant.title }}</p>
+                <a href="{{ item.url }}" class="font-medium text-lg text-gray-900 hover:underline block">
+                  {{ item.product.title }}
+                </a>
+                {% unless item.variant.title == 'Default Title' %}
+                  <p class="text-sm text-gray-500 mt-1">{{ item.variant.title }}</p>
+                {% endunless %}
                 <button type="button" class="remove-btn text-red-600 text-xs mt-2 underline" data-item-key="{{ item.key }}" data-action="remove">
                   Remove
                 </button>

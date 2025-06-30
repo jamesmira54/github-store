@@ -18,6 +18,14 @@
               {% render 'social-icons' %}
             </div>
           {% endif %}
+
+          {% if section.settings.show_payment_icons %}
+            <div class="footer__payment mt-4">
+              {% for type in shop.enabled_payment_types %}
+                {{ type | payment_type_svg_tag }}
+              {% endfor %}
+              </div>
+          {% endif %}
         </div>
         {% for block in section.blocks %}
           <div class="footer__column">
@@ -39,14 +47,6 @@
         &copy;
         {{ 'now' | date: '%Y' }}
         {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-      </div>
-
-      <div class="footer__payment">
-        {% if section.settings.show_payment_icons %}
-          {% for type in shop.enabled_payment_types %}
-            {{ type | payment_type_svg_tag }}
-          {% endfor %}
-        {% endif %}
       </div>
     </div>
   </div>
