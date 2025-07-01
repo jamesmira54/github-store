@@ -105,6 +105,12 @@ class ProductDetails extends HTMLElement {
         const newMeta = html.querySelector('#product-actions');
         if (newMeta && this.productActions) {
             this.productActions.innerHTML = newMeta.innerHTML;
+
+            // Re-attach event listeners to the new buttons
+            this.addToCartBtn = this.productActions.querySelector('#add-to-cart');
+            this.buyNowBtn = this.productActions.querySelector('#buy-now');
+            this.addToCartBtn?.addEventListener('click', () => this.addToCart());
+            this.buyNowBtn?.addEventListener('click', () => this.buyItNow());
         }
     }
 
