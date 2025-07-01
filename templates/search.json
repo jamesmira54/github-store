@@ -12,14 +12,9 @@
     "main": {
       "type": "search",
       "settings": {}
-    },
-      "cart_notification": {
-      "type": "cart-notification",
-      "settings": {}
     }
   },
   "order": [
-    "main",
-    "cart_notification"
+    "main"
   ]
 }

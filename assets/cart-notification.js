@@ -39,12 +39,6 @@ class CartNotification extends HTMLElement {
         if (closeButton) {
             closeButton.addEventListener('click', () => this.hideNotification());
         }
-
-        setTimeout(() => {
-            this.classList.remove('opacity-100', 'translate-y-0');
-            this.classList.add('opacity-0', 'translate-y-4');
-            setTimeout(() => this.classList.add('hidden'), 300);
-        }, 8000);
     }
 
     updateCartNotificationProductSection(sections) {

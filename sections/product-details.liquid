@@ -13,54 +13,55 @@
       <!-- Product Details -->
       <div>
         <h1 class="text-2xl font-bold mb-2">{{ product.title }}</h1>
-        <variant-selector data-product-url="{{ product.url }}">
-          {% render 'variants', product: product %}
-        </variant-selector>
 
         <p class="my-4 text-lg font-semibold">
           <span id="product-price">{{ current_variant.price | money }}</span>
         </p>
 
+        <variant-selector data-product-url="{{ product.url }}">
+          {% render 'variants', product: product %}
+        </variant-selector>
 
-        <!-- Quantity Selector -->
-        {% comment %} <div class="mb-4">
-          <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
-          <input type="number" id="product-quantity" name="quantity" min="1" value="1" class="w-24 border border-gray-300 rounded p-2 mt-1">
-        </div> {% endcomment %}
+        {% if product.available %}
+          <p class="text-green-600 font-semibold mb-4">In Stock: <span id="variant-stock">{{ current_variant.inventory_quantity }}</span></p>
+          <div class="flex items-center gap-2">
+            <button type="button" class="qty-btn px-2 py-1 text-gray-700 border rounded h-10 hover:bg-gray-900 hover:text-white" data-action="minus">−</button>
+            <input
+              id="product-quantity"
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              class="block qty-input text-center border rounded h-10 w-24 apperance-none"
+            />
+            <button type="button" class="qty-btn px-2 py-1 text-gray-700 border rounded h-10 hover:bg-gray-900 hover:text-white" data-action="plus">+</button>
+          </div>
+          
 
-        <div class="flex items-center gap-2">
-          <button type="button" class="qty-btn px-2 py-1 text-gray-700 border rounded h-10 hover:bg-gray-900 hover:text-white" data-action="minus">−</button>
-          <input
-            id="product-quantity"
-            type="number"
-            name="quantity"
-            value="1"
-            min="0"
-            class="block qty-input text-center border rounded h-10 w-24 apperance-none"
-          />
-          <button type="button" class="qty-btn px-2 py-1 text-gray-700 border rounded h-10 hover:bg-gray-900 hover:text-white" data-action="plus">+</button>
-        </div>
-        
+          <input type="hidden" name="variant-id" id="variant-id" value="{{ current_variant.id }}">
 
-        <input type="hidden" name="variant-id" id="variant-id" value="{{ current_variant.id }}">
+          <div id="product-actions" class="flex gap-4 mt-6">
+            {% if current_variant.inventory_quantity > 0 %}
+              <button 
+                id="add-to-cart" 
+                class="bg-gray-800 text-white px-6 py-3 rounded font-semibold hover:bg-gray-900 transition"
+                data-default-variant-id="{{ product.variants.first.id }}"
+              >
+                Add to Cart
+              </button>
+              <button 
+                id="buy-now" 
+                class="bg-orange-600 text-white px-6 py-3 rounded font-semibold hover:bg-gray-900 transition"
+                data-default-variant-id="{{ product.variants.first.id }}"
+              >
+                Buy It Now
+              </button>
+            {% endif %}
+          </div>
+        {% else %}
+          <p class="text-red-600 font-semibold mb-4">Out of Stock</p>
+        {% endif %}
 
-
-         <div class="flex gap-4 mt-6">
-          <button 
-            id="add-to-cart" 
-            class="bg-gray-800 text-white px-6 py-3 rounded font-semibold hover:bg-gray-900 transition"
-            data-default-variant-id="{{ product.variants.first.id }}"
-          >
-            Add to Cart
-          </button>
-          <button 
-            id="buy-now" 
-            class="bg-orange-600 text-white px-6 py-3 rounded font-semibold hover:bg-gray-900 transition"
-            data-default-variant-id="{{ product.variants.first.id }}"
-          >
-            Buy It Now
-          </button>
-        </div>
 
         <!-- Product Description -->
         <div class="mt-6">
