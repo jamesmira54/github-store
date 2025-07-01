@@ -12,9 +12,14 @@
     "main": {
       "type": "cart",
       "settings": {}
+    },
+    "testimonials_section": {
+      "type": "testimonials-section",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "testimonials_section"
   ]
 }

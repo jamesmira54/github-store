@@ -4,7 +4,7 @@
   {%- if cart != empty -%}
     <div class="cart-count-bubble">
       {%- if cart.item_count < 100 -%}
-        <span aria-hidden="true">{{ cart.item_count }}</span>
+        <span class="p-2 rounded-full bg-orange-600 text-white" aria-hidden="true">{{ cart.item_count }}</span>
       {%- endif -%}
     </div>
   {%- endif -%}
